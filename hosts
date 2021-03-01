@@ -1,0 +1,13 @@
+
+[web-servers]
+10.26.3.183 ansible_ssh_username=root ansible_ssh_pass=p@ssw0rd
+
+[grafana_loki-server]
+10.26.3.117 ansible_ssh_username=root ansible_ssh_pass=p@ssw0rd
+
+[nagios]
+10.26.0.246 ansible_ssh_username=root ansible_ssh_pass=p@ssw0rd
+
+[promtail]
+10.26.1.229 ansible_ssh_username=root ansible_ssh_pass=p@ssw0rd
+

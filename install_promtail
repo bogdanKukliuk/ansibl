@@ -1,0 +1,6 @@
+- hosts: promtail
+  roles:
+    - promtail
+
+  vars:
+    loki_url: http://10.26.3.117:3100/loki/api/v1/push

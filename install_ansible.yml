@@ -1,0 +1,7 @@
+- hosts: web-servers
+  roles:
+    - ansible-gitlab
+- hosts: nagios
+  roles:
+    - ansible-nagios
+

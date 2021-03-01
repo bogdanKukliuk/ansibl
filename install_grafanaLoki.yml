@@ -1,0 +1,7 @@
+- hosts: grafana_loki-server
+  roles:
+    - grafana-server
+    - loki
+
+  vars:
+    server: 10.26.3.117

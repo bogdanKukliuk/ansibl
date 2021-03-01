@@ -1,0 +1,45 @@
+- name: Download grafana loki.service v2.0.0
+  get_url:
+    url: "{{ grafana_loki_url }}"
+    dest: "/usr/local/bin/"
+
+- name: Extract Loki archive
+  unarchive:
+    src: "/usr/local/bin/loki-linux-amd64.zip"
+    dest: /usr/local/bin/
+    remote_src: yes
+
+- name: Rename loki-linux-amd64 to loki
+  command: mv /usr/local/bin/loki-linux-amd64 /usr/local/bin/loki
+
+
+- name: Changing perm of "loki", adding "a+x"
+  file: dest=/usr/local/bin/loki mode=a+x
+
+- name: Create loki config file
+  template:
+    src: templates/loki.config.j2
+    dest: /usr/local/bin/config-loki.yaml
+
+- name: Create loki service file
+  template:
+    src: templates/loki.service.j2
+    dest: /etc/systemd/system/loki.service
+
+- name: Open loki port on the firewall
+  firewalld:
+    port: 3100/tcp
+    permanent: true
+    state: enabled
+
+- name: Reload service firewalld
+  systemd:
+    name: firewalld
+    state: reloaded
+
+- name: Start and enable Grafana
+  service:
+    daemon_reload: yes
+    name: loki
+    state: started
+    enabled: yes
